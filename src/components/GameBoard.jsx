@@ -6,15 +6,30 @@ const initialGameBoard = [
   [null, null, null]
 ];
 
-const GameBoard = () => {
+const GameBoard = ({ activePlayerSymbol, onHandleActivePlayer }) => {
+  const [gameBoard, setGameBoard] = useState(initialGameBoard);
+
+  const handleSquareSelect = (rowIndex, colIndex) => {
+    setGameBoard((prevGameBoard) => {
+      let updatedGameBoard = [
+        ...prevGameBoard.map((innerArr) => [...innerArr])
+      ];
+      updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
+      return updatedGameBoard;
+    });
+    onHandleActivePlayer();
+  };
+
   return (
     <ol id="game-board">
-      {initialGameBoard.map((row, rowIndex) => (
+      {gameBoard.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button>{playerSymbol}</button>
+                <button onClick={() => handleSquareSelect(rowIndex, colIndex)}>
+                  {playerSymbol}
+                </button>
               </li>
             ))}
           </ol>
