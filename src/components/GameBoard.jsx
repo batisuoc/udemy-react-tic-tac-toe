@@ -21,6 +21,7 @@ const GameBoard = ({ onHandleActivePlayer, turns }) => {
               <li key={colIndex}>
                 <button
                   onClick={() => onHandleActivePlayer(rowIndex, colIndex)}
+                  disabled={playerSymbol !== null}
                 >
                   {playerSymbol}
                 </button>
